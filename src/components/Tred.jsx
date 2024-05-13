@@ -3,23 +3,29 @@ import * as BABYLON from 'babylonjs';
 
 export default function Tred() {
     useEffect(() => {
-        var canvas = document.getElementById('renderCanvas');
-        var engine = new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true });
-        var createScene = function () {
-            var scene = new BABYLON.Scene(engine);
-            var camera = new BABYLON.ArcRotateCamera("Camera", 0, 250, 10, BABYLON.Vector3.Zero(), scene);
-            var light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0, 1, 0), scene);
-            var sphere = BABYLON.Mesh.CreateSphere('sphere1', 16, 2, scene, false, BABYLON.Mesh.FRONTSIDE);
-            sphere.position.y = 1;
-            var ground = BABYLON.Mesh.CreateGround('ground1', 6, 6, 2, scene, false);
+        let canvas = document.getElementById('renderCanvas');
+        let engine = new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true });
+        let createScene = function () {
             
+            let scene = new BABYLON.Scene(engine);
+            let camera = new BABYLON.ArcRotateCamera("Camera", 0, 250, 10, BABYLON.Vector3.Zero(), scene);
+            let light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0, 1, 0), scene);
+            let sphere = BABYLON.Mesh.CreateSphere('sphere1', 16, 2, scene, false, BABYLON.Mesh.FRONTSIDE);
+            sphere.position.y = 1;
+            //let ground = BABYLON.Mesh.CreateGround('ground1', 6, 6, 2, scene, false);
+            // Defina os limites mínimo e máximo para o zoom da câmera
+            camera.lowerRadiusLimit = 5; // Zoom mínimo permitido
+            camera.upperRadiusLimit = 30; // Zoom máximo permitido
             camera.setTarget(sphere.position);
             
             camera.attachControl(canvas, false);
-            
+            scene.useRightHandedSystem = true;
+           
             return scene;
         }
-        var scene = createScene();
+        let scene = createScene();
+        scene.useRightHandedSystem = true;
+
         engine.runRenderLoop(function () {
             scene.render();
         });
