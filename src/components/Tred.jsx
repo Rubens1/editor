@@ -47,7 +47,8 @@ export default function Tred() {
         window.addEventListener('resize', function () {
             engine.resize();
         });
-    }, [])
+    }, []);
+    
     return (
         <div className='babylonjs'>
             <canvas id="renderCanvas" />
